@@ -1,0 +1,130 @@
+/*Since roman numerals use a specific block of numbers to be represented by certain letters, 
+we first identify the size of each block, then subtract the largest possible block first and 
+iterate through the smaller blocks until we reach zero. Each block that is used to subtract 
+from the arabic number will be tallied and stored into its own variable. This variable will 
+be used to reconstruct the final Roman numeral. The variables/letters are first listed out in 
+sequential order from largest block to smallest without regard to the roman numeral naming 
+convention. There will then be a check for the specific naming convention while the blocks 
+are being placed in sequential order. */
+/*The challenge is to create a algorithm that will allow for exceptions that do not follow the 
+system. For example: 1 is I, 2 is II, 3 is III but 4 is not IIII, instead it is IV. 9 is not 
+VIIII nor VIV but XI. 97 is not LXXXXVII, but instead XCVII. */
+//I = 1 V = 5 X = 10 L = 50 C = 100 D = 500 M = 1000
+
+function convertToRoman(num) {
+//first put num into an array for easier manipulation
+let arr1= [num];
+//create an array for each Roman Numeral Letter to store each instance of a sucessful subtraction. 
+let arrM=[0];
+let arrD=[0];
+let arrC=[0];
+let arrL=[0];
+let arrX=[0];
+let arrV=[0];
+let arrI=[0];
+
+/*start with the largest possible Roman Num block and see if its possible to subtract it. If 
+possible then continue subtracting until no longer possible. Then move onto the next sized 
+block until num has been reduced to zero. This will simultaneously tally each successful 
+subtraction into the array associated with that block. Each block has their own seperate array. */
+while(arr1[0]>=1000) {
+    arr1[0]= arr1[0]-1000;
+    arrM[0]= arrM[0]+1;
+  };
+  while(arr1[0]>=500) {
+    arr1[0]= arr1[0]-500;
+    arrD[0]= arrD[0]+1;
+  };
+  while(arr1[0]>=100) {
+    arr1[0]= arr1[0]-100;
+    arrC[0]= arrC[0]+1;
+  };
+  while(arr1[0]>=50) {
+    arr1[0]= arr1[0]-50;
+    arrL[0]= arrL[0]+1;
+  };
+  while(arr1[0]>=10) {
+    arr1[0]= arr1[0]-10;
+    arrX[0]= arrX[0]+1;
+  };
+  while(arr1[0]>=5) {
+    arr1[0]= arr1[0]-5;
+    arrV[0]= arrV[0]+1;
+  };
+ while(arr1[0]>=1) {
+    arr1[0]= arr1[0]-1;
+    arrI[0]= arrI[0]+1;
+  };
+
+//now that we finished tallying each successful block, we will reconstruct them into the final answer. 
+//this array will store the final result
+let final= [];
+
+/*whatever the count is in the block array is the same amount of that letter to be added to the 
+final array. If arrM[0]=3 then we add "M" 3 times to the final array. However, whenever there is 
+4 of a letter, the symbol will switch into only 1 instance of the lettter next to the next largest 
+symbol. For example if we have arrI[0]= 4, then instead of IIII, we have IV. Therefore we added an 
+if statement to check if the block array contains 4, then we use IV instead of IIII. We replicate 
+this with all other symbols until we reach M because there is no symbol larger than M. M is the 
+exception and can have as many instances of M as possible. 
+
+But this swap will not work if the next highest number is a multiple of 10. 9 in our algorithm 
+will be incorrectly written as VIIII. Since we said IIII will be swapped for IV, then VIIII becomes 
+VIV which is still wrong. This is because our previous swapping rule only works if the next highest 
+number is a multiple of 5, not a multiple of 10. Therefore we need to add another if statement to 
+account for this. The if statement will first check if the block has a value of 4, then check if 
+the next highest block has at least a value of 1. If both are true, then remove the previous entry 
+from the array final, and add the appropriate symbols. For 9, we meet the criteria of having the 4 
+values of IIII, plus the next largest symbol (V) is at least 1, therefore we can delete 'V' from 
+the final array, and add "IX". This extra check will only be added to the blocks of 1, 10, and 100 (I,X,C).*/
+
+for(let i=0;i<arrM[0];i++){
+  final.push("M");
+}
+if(arrD[0]==4) {
+  final.push("DX")
+  }else for(let i=0;i<arrD[0];i++){
+  final.push("D");
+}
+if(arrC[0]==4 && arrD[0]>=1) {
+  final.pop();
+  final.push("CM");
+} else if(arrC[0]==4) {
+  final.push("CD");
+  }else for(let i=0;i<arrC[0];i++){
+  final.push("C");
+}
+if(arrL[0]==4) {
+  final.push("LC");
+  }else for(let i=0;i<arrL[0];i++){
+  final.push("L");
+}
+if(arrX[0]==4 && arrL[0]>=1) {
+  final.pop();
+  final.push("XC");
+} else if(arrX[0]==4) {
+  final.push("XL");
+  }else for(let i=0;i<arrX[0];i++){
+  final.push("X");
+}
+if(arrV[0]==4) {
+  final.push("VX");
+  }else for(let i=0;i<arrV[0];i++){
+  final.push("V");
+}
+if(arrI[0]==4 && arrV[0]>=1) {
+  final.pop();
+  final.push("IX");
+} else if(arrI[0]==4) {
+  final.push("IV");
+  }else for(let i=0;i<arrI[0];i++){
+  final.push("I");
+}
+   let answer="";
+for(let j=0;j<final.length;j++) {
+  answer=answer+final[j];
+}
+return answer;
+}
+
+convertToRoman(2321);
