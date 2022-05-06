@@ -1,0 +1,114 @@
+/* We will use switch case to swap each letter to their 
+corresponding new letter. We first put the string into a
+new array for easier manipulation. Then we create an empty 
+array to put the our new translated letters. At the end 
+we will extract each letter out of the array and into one 
+string. 
+*/
+
+function rot13(str) {
+let arr1=[...str];
+var arr2= [];
+for(let i=0;i<arr1.length;i++) {
+
+switch(arr1[i]) {
+   case " ":
+    arr2.push(" ");
+    break;
+ case "A":
+    arr2.push("N");
+    break;
+  case "B":
+    arr2.push("O");
+    break;
+      case "C":
+    arr2.push("P");
+    break;
+      case "D":
+    arr2.push("Q");
+    break;
+      case "E":
+    arr2.push("R");
+    break;
+      case "F":
+    arr2.push("S");
+    break;
+      case "G":
+    arr2.push("T");
+    break;
+      case "H":
+    arr2.push("U");
+    break;
+      case "I":
+    arr2.push("V");
+    break;
+      case "J":
+    arr2.push("W");
+    break;
+      case "K":
+    arr2.push("X");
+    break;
+      case "L":
+    arr2.push("Y");
+    break;
+      case "M":
+    arr2.push("Z");
+    break;
+      case "N":
+    arr2.push("A");
+    break;
+      case "O":
+    arr2.push("B");
+    break;
+      case "P":
+    arr2.push("C");
+    break;
+      case "Q":
+    arr2.push("D");
+    break;
+      case "R":
+    arr2.push("E");
+    break;
+      case "S":
+    arr2.push("F");
+    break;
+      case "T":
+    arr2.push("G");
+    break;
+      case "U":
+    arr2.push("H");
+    break;
+      case "V":
+    arr2.push("I");
+    break;
+      case "W":
+    arr2.push("J");
+    break;
+      case "X":
+    arr2.push("K");
+    break;
+      case "Y":
+    arr2.push("L");
+    break;
+      case "Z":
+    arr2.push("M");
+    break;
+        case ".":
+    arr2.push(".");
+    break;
+        case "!":
+    arr2.push("!");
+    break;
+        case "?":
+    arr2.push("?");
+    break;
+}
+}
+   let answer="";
+for(let j=0;j<arr2.length;j++) {
+  answer=answer+arr2[j];
+}
+  return answer;
+}
+
+rot13("SERR PBQR PNZC");
