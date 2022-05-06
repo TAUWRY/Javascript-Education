@@ -1,0 +1,14 @@
+// the regex starts with requiring 1 to be at the beginning, however the 1 is optional. Then we allow optional space and dash. The last 9 numbers will be grouped up and set to be at the end of the phone number. Then for the first 3 numbers we put them into another group because they are the area code and may or may not have parenthese. We will allow 2 types: one with both parenthese or one without any parenthese. These two searches can be seperated by an 'or' symbol. Add optional space and dash, 3 number, optional space and dash, 4 numbers. 
+//valid numbers:
+/*555-555-5555
+(555)555-5555
+(555) 555-5555
+555 555 5555
+5555555555
+1 555 555 5555 */
+
+function telephoneCheck(str) {
+ let regex = /^1?[ -]*((\d{3}|\(\d{3}\))[ -]*\d{3}[ -]*\d{4})$/;
+ return regex.test(str);
+}
+telephoneCheck("5555555555");
