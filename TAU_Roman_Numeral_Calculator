@@ -120,6 +120,7 @@ if(arrI[0]==4 && arrV[0]>=1) {
   }else for(let i=0;i<arrI[0];i++){
   final.push("I");
 }
+//Here we will convert the array into one string
    let answer="";
 for(let j=0;j<final.length;j++) {
   answer=answer+final[j];
