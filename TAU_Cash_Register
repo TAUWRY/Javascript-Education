@@ -1,0 +1,136 @@
+/*The first thing is to set a variable equal to the change due to 
+  the customers. We will use the change amount as the starting 
+  amount and then continuously subtracting using the largest bills 
+  possible then go through each type of bill and coin until we 
+  reach zero. This is similar to what we did with the Roman Numerals. 
+  However we must also determine if we even have enough bills/coins 
+  to give back. */
+  
+function checkCashRegister(price, cash, cid) {
+  //this is the variable that we will base our entire algorithm around
+  let change = cash-price;
+  /*create variables equal to zero for every bill/coin type. We will 
+    tally how many of each change type to give back and store the 
+    amount into these variables*/
+  let penny=0;
+  let nickel=0;
+  let dime=0;
+  let quarter=0;
+  let one=0;
+  let five=0;
+  let ten=0;
+  let twenty=0;
+  let hundred=0;
+/*These variables store the amounts of each change type in the
+  current cash drawer. We will use this later to check if we have
+  enough change of each type to give back. */
+let finhun= cid[8][1];
+let fintwe= cid[7][1];
+let finten= cid[6][1];
+let finfiv= cid[5][1];
+let finone= cid[4][1];
+let finqua= cid[3][1];
+let findim= cid[2][1];
+let finnic= cid[1][1];
+let finpen= cid[0][1];
+/*The algorithm begins by checking if the change amount is greater 
+  than $100 because that is the largest bill possible. But at the 
+  same time, it also checks if the cash drawer has more than zero 
+  amount of $100 bills. If both are true, then we can subtract $100 
+  from the cash drawer and give it to the customer. Since we just 
+  gave them $100, the amount of change remaining is now reduced by 
+  $100. This continues iterating until either the change due is now 
+  less than $100 or we run out of $100 bills in our cash drawer. In 
+  which case we repeat this while loop with the next smaller bill/coin 
+  until the total change due reaches zero. While this is iterating, we
+  are also tallying each bill/coin we give out, into their respective
+  variables for use later */
+while(change>=100&&finhun>0){
+  change= change-100;
+  finhun= finhun-100;
+hundred= hundred+100;
+}
+while(change>=20&&fintwe>0){
+  change= change-20;
+  fintwe=fintwe-20;
+twenty= twenty+20;
+}
+while(change>=10&&finten>0){
+  change= change-10;
+  finten= finten-10;
+ten= ten+10;
+}
+while(change>=5&&finfiv>0){
+  change= change-5;
+  finfiv=finfiv-5;
+five= five+5;
+}
+while(change>=1&&finone>0){
+  change= change-1;
+  finone=finone-1;
+one = one+1;
+}
+while(change>=0.25&&finqua>0){
+  change= change-0.25;
+  finqua= finqua-0.25;
+quarter= quarter+0.25;
+}
+while(change>=0.1&&findim>0){
+  change= change-0.1;
+  findim= findim-0.1;
+dime= dime+0.1;
+}
+while(change>=0.05&&finnic>0){
+  change= change-0.05;
+  finnic=finnic-0.05;
+nickel  = nickel+0.05
+}
+while(change>0.0001&&finpen>0){
+  change= change-0.01;
+  finpen=finpen-0.01;
+penny= penny+0.01;
+}
+/*The below arrays are to generate the correct format that the test 
+  wants us to return. We will also remove any bills/coins that were 
+  not used as change. Only returning the valid bills/coins and their 
+  amounts
+*/
+let arr1= [["ONE HUNDRED", hundred], ["TWENTY", twenty], ["TEN", ten], ["FIVE", five],["ONE", one], ["QUARTER", quarter], ["DIME", dime], ["NICKEL", nickel], ["PENNY", penny]];
+let arr2=[];
+for(let i=0;i<arr1.length;i++) {
+ if(arr1[i][1]!=0) {
+arr2.push(arr1[i]);
+ }
+}
+/*Javascript doesnt play well with decimals and arithmetic functions 
+  will create residual tiny decimals. Hence instead of change>0, 
+  I had to use change>0.001 because upon completion of my algorithm, the 
+  final change will not be zero, but instead something like 0.000000001,*/
+if(change>0.001) {
+  return {status: "INSUFFICIENT_FUNDS", change: []}
+} 
+/*This is to check if the change due will result in the cash drawer 
+  having no more change left, cashing out*/
+else if(hundred.toFixed(2)==cid[8][1]&&
+twenty.toFixed(2)==cid[7][1]&&
+ten.toFixed(2)==cid[6][1]&&
+five.toFixed(2)==cid[5][1]&&
+one.toFixed(2)==cid[4][1]&&
+quarter.toFixed(2)==cid[3][1]&&
+dime.toFixed(2)==cid[2][1]&&
+nickel.toFixed(2)==cid[1][1]&&
+penny.toFixed(2)==cid[0][1]) {
+  return {status: "CLOSED", change: cid}
+} 
+else return {status: "OPEN", change: arr2};
+}
+checkCashRegister(3.26, 100, [
+  ["PENNY", 1.01], 
+  ["NICKEL", 2.05], 
+  ["DIME", 3.1], 
+  ["QUARTER", 4.25], 
+  ["ONE", 90], 
+  ["FIVE", 55], 
+  ["TEN", 20], 
+  ["TWENTY", 60], 
+  ["ONE HUNDRED", 100]]);
