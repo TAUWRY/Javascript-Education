@@ -1,0 +1,24 @@
+function palindrome(str) {
+//first we make a regex to remove all non-alphanumeric characters
+let lows= str.toLowerCase();
+let regex=/[a-z0-9]/gi;
+let arr1= lows.match(regex);
+let arr2=[];
+
+//create an array with the reverse of the given array
+for(let i=0;i<arr1.length;i++) {
+arr2.unshift(arr1[i]);
+} 
+//converts the array into a string
+let arr3= [];
+let arr4= [];
+for(let j=0;j<arr1.length;j++){
+  arr3=arr3+(arr1[j]);
+   arr4=arr4+(arr2[j]);
+}
+//compares the two strings to see if equal
+if(arr3==arr4) {
+  return true;
+} else return false
+}
+palindrome("race car");
